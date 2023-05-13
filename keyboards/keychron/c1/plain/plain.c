@@ -22,6 +22,8 @@ static bool mode_leds_show = true;
 static bool mode_leds_windows;
 
 static void mode_leds_update(void){
+    // turn off win/mac LEDS as they are distracting
+    mode_leds_show = false;
     writePin(LED_WIN_PIN, mode_leds_show && mode_leds_windows);
     writePin(LED_MAC_PIN, mode_leds_show && !mode_leds_windows);
 }
