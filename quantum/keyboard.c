@@ -100,6 +100,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifdef SLEEP_LED_ENABLE
 #    include "sleep_led.h"
 #endif
+#ifdef CAPS_WORD_ENABLE
+#    include "caps_word.h"
+#endif
+
 
 static uint32_t last_input_modification_time = 0;
 uint32_t        last_input_activity_time(void) { return last_input_modification_time; }
@@ -388,6 +392,10 @@ void keyboard_task(void) {
 
     uint8_t matrix_changed = matrix_scan();
     if (matrix_changed) last_matrix_activity_trigger();
+ //   adding capswords manually
+#ifdef CAPS_WORD_ENABLE
+    caps_word_task();
+#endif
 
     for (uint8_t r = 0; r < MATRIX_ROWS; r++) {
         matrix_row    = matrix_get_row(r);
