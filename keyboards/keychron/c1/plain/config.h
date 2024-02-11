@@ -17,17 +17,17 @@
 
 #pragma once
 
-#include "config_common.h"
+// #include "config_common.h"
 
 /* USB Device descriptor parameter */
-#define VENDOR_ID                   0x3434
+// #define VENDOR_ID                   0x3434
 #define PRODUCT_ID                  0xFE20
-#define DEVICE_VER                  0x0001
+// #define DEVICE_VER                  0x0001
 
-#define MANUFACTURER                Keychron
+// #define MANUFACTURER                Keychron
 // \x43\x31 is "C1" in ASCII hex, this is used to prevent macro expansion, because C1 is also a pin macro.
-#define PRODUCT                     \x43\x31
-#define DESCRIPTION                 \x43\x31 QMK
+// #define PRODUCT                     \x43\x31
+// #define DESCRIPTION                 \x43\x31 QMK
 
 #define WAIT_FOR_USB
 #define USB_MAX_POWER_CONSUMPTION   100
@@ -57,11 +57,18 @@
 #define LED_MAC_PIN                 B4
 #define LED_WIN_PIN                 B5
 
-/* Enable NKRO by default */ 
+/* Enable NKRO by default */
 #define FORCE_NKRO
 
-#define DYNAMIC_KEYMAP_LAYER_COUNT     4
-#define DYNAMIC_KEYMAP_EEPROM_MAX_ADDR 1000
+// #define DYNAMIC_KEYMAP_LAYER_COUNT     4
+// #define DYNAMIC_KEYMAP_EEPROM_MAX_ADDR 1000
+// #define DYNAMIC_KEYMAP_EEPROM_MAX_ADDR 50
 
 /* Polling Rate */
 #define USB_POLLING_INTERVAL_MS 1
+// trying to reduce size
+// #define NO_DEBUG
+// #define NO_PRINT
+#define NO_ACTION_TAPPING
+#define NO_ACTION_ONESHOT
+#define TAPPING_FORCE_HOLD
