@@ -33,13 +33,12 @@ enum custom_keycodes {
 #define KC_SNIP LGUI(LSFT(KC_S))    // Windows snip tool
 #define KC_W_FN MO(WIN_FN)          // Windows Fn
 
-#define KC_MSSN LGUI(KC_F3)         // Mission Control
-#define KC_FIND LALT(LGUI(KC_SPC))  // Finder
-#define KC_SIRI LGUI(KC_SPC)        // Siri
-#define KC_MSCR LSFT(LGUI(KC_3))    // Mac screenshot
-#define KC_MSNP LSFT(LGUI(KC_4))    // Mac snip tool
+// #define KC_FIND LALT(LGUI(KC_SPC))  // Finder
+// #define KC_SIRI LGUI(KC_SPC)        // Siri
+// #define KC_MSCR LSFT(LGUI(KC_3))    // Mac screenshot
+// #define KC_MSNP LSFT(LGUI(KC_4))    // Mac snip tool
 #define KC_M_FN MO(MAC_FN)          // Mac Fn
-#define KD_M_LK LCMD(LCTL(KC_Q))    // Mac Lock
+// #define KD_M_LK LCMD(LCTL(KC_Q))    // Mac Lock
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /*  Windows layout
@@ -93,7 +92,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     */
 
     [MAC_BASE] = LAYOUT( \
-        KC_ESC,             KC_BRID,  KC_BRIU,  KC_MSSN,  KC_LPAD,  KC_F5,    KC_F6,  KC_MPRV,  KC_MPLY,  KC_MNXT,  KC_MUTE,  KC_VOLD,  KC_VOLU,  KC_MPLY,  KC_VOLD,  KC_VOLU, \
+        KC_ESC,             KC_BRID,  KC_BRIU,  KC_MCTL,  KC_LPAD,  KC_F5,    KC_F6,  KC_MPRV,  KC_MPLY,  KC_MNXT,  KC_MUTE,  KC_VOLD,  KC_VOLU,  KC_MPLY,  KC_VOLD,  KC_VOLU, \
         KC_GRV,   KC_1,     KC_2,     KC_3,     KC_4,     KC_5,     KC_6,     KC_7,   KC_8,     KC_9,     KC_0,     KC_MINS,  KC_EQL,   KC_BSPC,  KC_INS,   KC_HOME,  KC_PGUP, \
         KC_TAB,   KC_Q,     KC_W,     KC_E,     KC_R,     KC_T,     KC_Y,     KC_U,   KC_I,     KC_O,     KC_P,     KC_LBRC,  KC_RBRC,  KC_BSLS,  KC_DEL,   KC_END,   KC_PGDN, \
         CAPSWRD,  KC_A,     KC_S,     KC_D,     KC_F,     KC_G,     KC_H,     KC_J,   KC_K,     KC_L,     KC_SCLN,  KC_QUOT,            KC_ENT,                                \
@@ -122,8 +121,25 @@ void caps_word_set_user(bool active) {
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t* record) {
-  if (!process_autocorrection(keycode, record)) { return false; }
-  // Your macros...
 
-  return true;
+  switch (keycode) {
+        case KC_MISSION_CONTROL:
+            if (record->event.pressed) {
+                host_consumer_send(0x29F);
+            } else {
+                host_consumer_send(0);
+            }
+            return false;  // Skip all further processing of this key
+        case KC_LAUNCHPAD:
+            if (record->event.pressed) {
+                host_consumer_send(0x2A0);
+            } else {
+                host_consumer_send(0);
+            }
+            return false;  // Skip all further processing of this key
+        default:
+            if (!process_autocorrection(keycode, record)) { return false; }
+            return true;  // Process all other keycodes normally
+    }
 }
+
